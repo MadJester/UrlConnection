@@ -25,3 +25,4 @@ sadistic.pl		r1	r2	r3
 
 
 sadistic.ol
+http://www.wp.pl 1

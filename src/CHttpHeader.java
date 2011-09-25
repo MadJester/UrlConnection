@@ -43,4 +43,8 @@ public class CHttpHeader {
 	public String toString() { 
 		return "{error: "+this.getError()+" status: "+this.getResponseCode()+" url: "+this.getPath()+"}";
 	}
+
+	public String getResponseCodeNum() {
+		return CHttpTools.extractResponseCodeNum(this.mResponseCode);
+	}
 }

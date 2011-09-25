@@ -16,23 +16,58 @@ public class PLTUrlListFile {
 			throws FileNotFoundException, IOException {
 
 		List<String> lines = loadFileLineByLine(string);
-		List<PLTUrlListError> errors = checkForErrors(lines);
 
-		if(tryToFix == true)
-		{
+		if (tryToFix == true) {
 			lines = fixCode(lines);
 		}
-		
+
+		List<PLTUrlListError> errors = checkForErrors(lines);
+
 		PLTUrlList list = parse(lines, errors);
 
 		return list;
 	}
 
 	private static List<String> fixCode(List<String> lines) {
+
+		List<String> fixedList = new ArrayList<String>();
 		
-		
-		
-		return null;
+		Iterator<String> it = lines.iterator();
+
+		while (it.hasNext()) {
+			String temp = it.next();
+
+			int skip = 0;
+			int whitePos = -1;
+			StringBuilder builder = new StringBuilder();
+
+			for (int i = 0; i < temp.length(); i++) {
+				char c = temp.charAt(i);
+
+				if (c == '#') {
+					skip = 1;
+					break;
+				} else if (c == ' ') {
+					if (whitePos == -1) {
+						whitePos = i;
+						builder.append(c);
+					}
+				} else if (c == '\t') {
+					if (whitePos == -1) {
+						whitePos = i;
+						builder.append(" ");
+					}
+				} else {
+					whitePos = -1;
+					builder.append(c);
+				}
+			}
+
+			if(builder.length()>0 && skip == 0)
+				fixedList.add(builder.toString());				
+		}
+
+		return fixedList;
 	}
 
 	public static PLTUrlList parse(List<String> lines,
@@ -48,7 +83,7 @@ public class PLTUrlListFile {
 		Iterator<PLTUrlListError> er = errors.iterator();
 
 		while (it.hasNext() && er.hasNext()) {
-			
+
 			String current_string = it.next();
 			PLTUrlListError current_error = er.next();
 
@@ -62,7 +97,8 @@ public class PLTUrlListFile {
 						Integer urlRepeatTimes = 1;
 						if (list.length > 1) {
 							try {
-								urlRepeatTimes = Integer.parseInt(list[1].trim());
+								urlRepeatTimes = Integer.parseInt(list[1]
+										.trim());
 
 								if (urlRepeatTimes <= 0) {
 									throw new NumberFormatException();
@@ -72,7 +108,8 @@ public class PLTUrlListFile {
 								urlRepeatTimes = 1;
 							}
 						}
-						urlList.add(current_string, current_error, list[0].trim(), urlRepeatTimes);
+						urlList.add(current_string, current_error,
+								list[0].trim(), urlRepeatTimes);
 					}
 				}
 			}
