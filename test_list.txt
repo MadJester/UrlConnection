@@ -1,0 +1,27 @@
+# New search query input pattern
+
+http://www.wp.pl 1
+http://www.onet.pl
+www.demotywatory.pl
+jakdojade.pl 2
+# Lista zła - http://
+htts://onet.pl
+http:/onet.pl
+onet.pl
+www.onet.pl
+# Lista zła - znaki spacja i tab
+http://www.onet.pl  1
+http://www.wp.pl	1	
+www.mistrzowie.org	s1
+sadistic.pl		r1	r2	r3
+1	http://wp.pl			2
+
+
+
+
+
+
+
+
+
+sadistic.ol

@@ -1,3 +1,8 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
+
 
 public class Tests {
 	public static void main(String[] args) {
@@ -23,6 +28,37 @@ public class Tests {
 		System.out.println(" - 7 {error: "+headers[6].getError()+" status: "+CHttpTools.extractResponseCodeNum(headers[6].getResponseCode())+" url: "+headers[6].getPath()+"}");
 		System.out.println(" - 8 {error: "+headers[7].getError()+" status: "+CHttpTools.extractResponseCodeNum(headers[7].getResponseCode())+" url: "+headers[7].getPath()+"}");
 		System.out.println("-- Headers");
+		
+		try {
+			PLTUrlList list = PLTUrlListFile.tryToParse("test_list.txt", false);
+			System.out.println("-- Lines");
+			System.out.println(" - bad lines count "+list.getBadLinesCount());
+			{
+				List<PLTUrlInfo> temp = list.getList();
+				Iterator<PLTUrlInfo> it = temp.iterator();
+				while(it.hasNext())
+				{
+					PLTUrlInfo pui = it.next();
+					System.out.println("  - {path: '"+pui.PATH+"' quantity: "+pui.COUNT+" errors: "+pui.ERROR.getErrors()+"}" );
+				}
+			}			
+			System.out.println("-- Lines");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		//----------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------
+		// #####
+		
+		// #####
+		//----------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------------
 	}
 
 }
